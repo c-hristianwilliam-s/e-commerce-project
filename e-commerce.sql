@@ -34,9 +34,6 @@ SELECT SUM(Profit) From OrderDetails WHERE Category = 'Furniture';
 SELECT SUM(Profit) FROM OrderDetails WHERE Category = 'Electronics';
 SELECT SUM(Profit) FROM OrderDetails WHERE Category = 'Clothing';
 
---Total Profit lost
-SELECT SUM()
-
 --Average quantity per order
 SELECT AVG(quantity) AS Quantity FROM orderdetails;
 
@@ -57,7 +54,10 @@ GROUP BY category, subcategory ORDER BY Total DESC;
 SELECT orderdetails.subcategory, SUM(orderdetails.quantity) FROM orderdetails 
 WHERE subcategory = 'Phones' GROUP BY orderdetails.subcategory;
 
-
+--Percentage of orders placed that increased profit
+SELECT COUNT(CASE WHEN orderdetails.profit > 0 THEN 1 END) * 100/COUNT(*) 
+AS percentage_up, COUNT(CASE WHEN orderdetails.profit < 0 THEN 1 END) * 100/COUNT(*) 
+AS percentage_down FROM orderdetails;
 
 
 
