@@ -46,6 +46,9 @@ SELECT AVG(quantity) AS Quantity FROM orderdetails WHERE category = 'Furniture';
 SELECT COUNT(CASE WHEN orderdetails.quantity > 1 THEN 1 END)*100/COUNT(*)
 AS Furniture_Bundle FROM orderdetails WHERE category = 'Furniture';
 
+--Percentage of purchases by category
+
+
 --Which Products are being spent the most towards
 SELECT category, subcategory, SUM(amount) AS Total FROM orderdetails
 GROUP BY category, subcategory ORDER BY Total DESC;
@@ -58,6 +61,8 @@ WHERE subcategory = 'Phones' GROUP BY orderdetails.subcategory;
 SELECT COUNT(CASE WHEN orderdetails.profit > 0 THEN 1 END) * 100/COUNT(*) 
 AS percentage_up, COUNT(CASE WHEN orderdetails.profit < 0 THEN 1 END) * 100/COUNT(*) 
 AS percentage_down FROM orderdetails;
+
+
 
 
 
@@ -110,3 +115,10 @@ ORDER BY total_spent DESC LIMIT 1;
 SELECT list_of_orders.customername, SUM(orderdetails.amount) AS total_spent FROM orderdetails 
 JOIN list_of_orders ON orderdetails.orderid = list_of_orders.orderid GROUP BY list_of_orders.customername
 ORDER BY total_spent LIMIT 1;
+
+--Orders that contained items from multiple categories.
+SELECT list_of_orders.customername, orderdetails.orderid, COUNT(DISTINCT orderdetails.category) FROM list_of_orders
+JOIN orderdetails ON list_of_orders.orderid = orderdetails.orderid
+GROUP BY list_of_orders.customername, orderdetails.orderid
+HAVING COUNT(DISTINCT orderdetails.category) > 1;
+
