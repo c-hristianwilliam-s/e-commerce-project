@@ -99,3 +99,8 @@ ON orderdetails.orderid = list_of_orders.orderid GROUP BY list_of_orders.state;
 SELECT list_of_orders.customername, SUM(orderdetails.amount) AS total_spent FROM orderdetails 
 JOIN list_of_orders ON orderdetails.orderid = list_of_orders.orderid GROUP BY list_of_orders.customername
 ORDER BY total_spent DESC LIMIT 1;
+
+--Which customer spent the least amount of money
+SELECT list_of_orders.customername, SUM(orderdetails.amount) AS total_spent FROM orderdetails 
+JOIN list_of_orders ON orderdetails.orderid = list_of_orders.orderid GROUP BY list_of_orders.customername
+ORDER BY total_spent LIMIT 1;
