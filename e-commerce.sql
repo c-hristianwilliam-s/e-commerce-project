@@ -17,6 +17,9 @@ CREATE TABLE List_Of_Orders (
 
 -- BASIC INFO (SPECIFIC TO EACH TABLE)
 
+--What locations does this dataset include?
+SELECT city, state FROM list_of_orders;
+
 --How many customers are in this dataset?
 SELECT COUNT(*) FROM List_Of_Orders;
 
@@ -30,6 +33,9 @@ SELECT DISTINCT subcategory FROM OrderDetails;
 SELECT SUM(Profit) From OrderDetails WHERE Category = 'Furniture';
 SELECT SUM(Profit) FROM OrderDetails WHERE Category = 'Electronics';
 SELECT SUM(Profit) FROM OrderDetails WHERE Category = 'Clothing';
+
+--Total Profit lost
+SELECT SUM()
 
 --Average quantity per order
 SELECT AVG(quantity) AS Quantity FROM orderdetails;
@@ -85,11 +91,11 @@ SELECT COUNT(CASE WHEN list_of_orders.orderdate LIKE '%-2018' THEN 1 END) * 100/
 COUNT(CASE WHEN list_of_orders.orderdate LIKE '%-2019' THEN 1 END) * 100/COUNT(*) AS Percentage_2019
 FROM list_of_orders JOIN orderdetails ON list_of_orders.orderid = orderdetails.orderid;
 
---Top category in the summer months in 2018
+--Least to Greatest category in the summer months in 2018 (profit)
 SELECT orderdetails.category, SUM(orderdetails.profit) AS Total_Profit FROM orderdetails JOIN list_of_orders
 ON orderdetails.orderid = list_of_orders.orderid WHERE list_of_orders.orderdate LIKE '%06-2018' OR
 list_of_orders.orderdate LIKE '%07-2018' OR list_of_orders.orderdate LIKE '%08-2018' GROUP BY
-orderdetails.category ORDER BY Total_profit DESC Limit 1;
+orderdetails.category ORDER BY Total_profit DESC;
 
 --States and their total profit 
 SELECT list_of_orders.state, SUM(orderdetails.profit) AS Total FROM orderdetails JOIN list_of_orders
