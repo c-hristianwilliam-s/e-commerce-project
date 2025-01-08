@@ -27,7 +27,7 @@ SELECT COUNT(*) FROM List_Of_Orders;
 SELECT DISTINCT Category FROM OrderDetails;
 
 -- What are the sub-categories of items?
-SELECT DISTINCT subcategory FROM OrderDetails;
+SELECT DISTINCT category, subcategory FROM OrderDetails ORDER BY category;
 
 --Total Profit made In Each Category
 SELECT SUM(Profit) From OrderDetails WHERE Category = 'Furniture';
@@ -47,7 +47,9 @@ SELECT COUNT(CASE WHEN orderdetails.quantity > 1 THEN 1 END)*100/COUNT(*)
 AS Furniture_Bundle FROM orderdetails WHERE category = 'Furniture';
 
 --Percentage of purchases by category
-
+SELECT COUNT(CASE WHEN orderdetails.category = 'Clothing' THEN 1 END) * 100/COUNT(*) AS Clothing,
+COUNT(CASE WHEN orderdetails.category = 'Electronics' THEN 1 END) * 100/COUNT(*) AS Electronics,
+COUNT(CASE WHEN orderdetails.category = 'Furniture' THEN 1 END) * 100/COUNT(*) AS Furniture FROM orderdetails;
 
 --Which Products are being spent the most towards
 SELECT category, subcategory, SUM(amount) AS Total FROM orderdetails
@@ -121,4 +123,6 @@ SELECT list_of_orders.customername, orderdetails.orderid, COUNT(DISTINCT orderde
 JOIN orderdetails ON list_of_orders.orderid = orderdetails.orderid
 GROUP BY list_of_orders.customername, orderdetails.orderid
 HAVING COUNT(DISTINCT orderdetails.category) > 1;
+
+
 
